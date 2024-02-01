@@ -8,8 +8,8 @@ app.use(cors());
 app.use(express.json());
 
 const URL = process.env.ATLAS_URI;
-mongoose
-  .connect(URL)
+
+mongoose.connect(URL)
   .then(() => {
     console.log("connected to MongoDB");
   })
