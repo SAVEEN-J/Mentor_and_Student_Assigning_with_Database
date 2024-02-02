@@ -11,7 +11,7 @@ const URL = process.env.ATLAS_URI;
 
 mongoose.connect(URL)
   .then(() => {
-    console.log("connected to MongoDB");
+    console.log(`connected to MongoDB`);
   })
   .catch((err) => {
     console.error(err);
@@ -21,6 +21,11 @@ mongoose.connect(URL)
 
 const mentorSchema = new mongoose.Schema({
   name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
     type: String,
     required: true,
     trim: true,
@@ -35,6 +40,11 @@ const mentorSchema = new mongoose.Schema({
 
 const studentSchema = new mongoose.Schema({
   name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
     type: String,
     required: true,
     trim: true,
@@ -75,13 +85,14 @@ app.get("/student", (req, res) => {
 app.post("/student", async (req, res) => {
   try {
     let newStudent = new StudentModel(req.body);
+    console.log("newStudent",newStudent);
     if (!newStudent.name) {
       return res.status(404).json({
         message: "Invalid student data",
       });
     }
     newStudent = newStudent.save();
-    res.status(200).json({ message: "New student added Successfully" });
+    res.status(200).json({ message: "New student create Successfully" });
   } catch (error) {
     res
       .status(404)
